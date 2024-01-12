@@ -1,0 +1,86 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package annuaire;
+
+option java_package = "com.proto.annuaire";
+option java_multiple_files = true;
+
+message Personne {
+  string nom = 1 ;
+  string prenom = 2 ;
+}
+message InfoRessource {
+  string bureau = 1;
+  string notel = 2 ;
+  string email = 3 ;
+}
+message Entree {
+  Personne individu = 1 ;
+  InfoRessource info = 2 ;
+}
+enum TypeCR {
+  DONE = 0 ;
+  DENY_DUPLICATED = 1 ;
+  DENY_NOT_FOUND = 2 ;
+  DENY_BAD_VALUES = 3 ;
+  ACCEPTED_GOOD_VALUES = 4 ;
+  DENY_OTHER = 9 ;
+}
+message AURequest {
+  Entree ressource = 1 ;
+}
+message AUDResponse {
+  TypeCR cr = 1 ;
+}
+message DGRequest {
+  Personne ressource = 1 ;
+}
+message GResponse {
+  TypeCR cr = 1 ;
+  optional Entree ressource = 2 ;
+}
+service GestionRessourcesService {
+    rpc addRessource(AURequest) returns(AUDResponse){};
+    rpc delRessource(DGRequest) returns(AUDResponse){};
+    rpc modifyRessource(AURequest) returns (AUDResponse){};
+    rpc getRessource(DGRequest) returns(GResponse){};
+    rpc listRessources(google.protobuf.Empty) returns (stream Personne){}
+}
+
+message Identifiant {
+  string login = 1 ;
+  string passwd = 2 ;
+}
+service AuthentificationServiceClient {
+  rpc check(Identifiant) returns(AUDResponse){};
+}
+
+service AuthentificationServiceManager {
+  rpc check(Identifiant) returns(AUDResponse){};
+  rpc add(Identifiant) returns(AUDResponse){};
+  rpc delete(Identifiant) returns(AUDResponse){};
+  rpc update(Identifiant) returns(AUDResponse){};
+}
+
+message Log {
+  string request = 1 ;
+  TypeCR response = 2 ;
+  string login = 3 ;
+  string passwd = 4 ;
+  string horodatage = 5 ;
+  string ip = 6 ;
+  int32 portNumber = 7 ;
+}
+
+message LogStored{
+  string uuid = 1 ;
+  Log log = 2 ;
+}
+
+service LoggingService {
+  rpc log(Log) returns(google.protobuf.Empty){};
+  rpc list(google.protobuf.Empty) returns (stream LogStored){}
+}
+

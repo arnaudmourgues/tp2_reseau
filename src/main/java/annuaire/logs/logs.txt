@@ -1,0 +1,3 @@
+94285e3f-1fc2-4746-972b-ffa0ebcc8524;2023-12-06 11:25:35.964162;check;monstre;brother;ACCEPTED_GOOD_VALUES;localhost;3244
+ebdc877d-6ca1-4bf4-995d-5152c9cb95ad;2023-12-06 11:26:45.039376800;check;monstre;broooother;DENY_BAD_VALUES;localhost;3244
+8f6169eb-1762-4008-ab15-b5278dfc48a0;2023-12-06 12:52:13.212576700;check;monstre;brother;DENY_BAD_VALUES;/127.0.0.1;61546
